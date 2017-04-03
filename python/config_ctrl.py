@@ -30,11 +30,11 @@ class Configurations(object):
         self.waterPumpTimePeriod = datetime.time(1, 00)
         self.waterPumpTimeDuration = datetime.time(0, 10)
 
-def StoreConfigurations(config: Configurations):
+def storeConfigurations(config: Configurations):
     with open(configurationFile, 'wb') as output:
         pickle.dump(config, output, pickle.HIGHEST_PROTOCOL)
 
-def ReadConfigurations():
+def readConfigurations():
     with open(configurationFile, 'rb') as input:
         configs = pickle.load(input)
         return configs
