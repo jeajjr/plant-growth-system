@@ -1,16 +1,16 @@
 
-def enableWaterPump():
-    #TODO: enable water pump
-    print('Water pump enabled')
+def setWaterPump(value=False):
+    if value:
+        #TODO: enable water pump
+        print('Water pump enabled')
+    else:
+        #TODO: disable water pump
+        print('Water pump disabled')
 
-def disableWaterPump():
-    #TODO: disable water pump
-    print('Water pump disabled')
-
-def enableLight():
-    #TODO: enable light
-    print('Light enabled')
-
-def disableLight():
-    #TODO: disable light
-    print('Light disabled')
+def setLight(value=False):
+    if value:
+        #TODO: enable light
+        print('Light enabled')
+    else:
+        #TODO: disable light
+        print('Light disabled')
