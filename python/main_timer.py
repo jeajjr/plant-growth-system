@@ -1,5 +1,5 @@
 import config_ctrl
-from datetime import time
+from datetime import time, datetime
 from time import sleep
 from sensor_reader import readAirHumidity, readAirTemperature, readSoilHumidity, readLightIntensity
 from actuator_controller import setLight, setWaterPump
@@ -9,7 +9,6 @@ import socket
 import struct
 
 CONFIG_HAS_CHANGED = True
-
 
 class ConfigServerSpawner(threading.Thread):
     def __init__(self,port):
