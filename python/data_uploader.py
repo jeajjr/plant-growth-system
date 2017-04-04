@@ -8,6 +8,6 @@ def postData(pubKey, privKey, air_humidity, air_temp, light, soil_humidity, ctrl
 
     try:
         p.log(air_humidity, air_temp, light, soil_humidity, ctrl_light, ctrl_pump)
-        print(p.remaining_bytes, p.cap)
+        print('Data uploaded successfully')
     except:
         print('Failed to upload data')
