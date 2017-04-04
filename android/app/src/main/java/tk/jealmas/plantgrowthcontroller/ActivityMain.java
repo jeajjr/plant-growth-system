@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,8 @@ public class ActivityMain extends Activity {
 
     private Button commandButton;
     private Button dataButton;
+
+    private EditText textIp;
 
     private TextView textAirHum;
     private TextView textAirTemp;
@@ -31,6 +34,8 @@ public class ActivityMain extends Activity {
 
         commandButton = (Button) findViewById(R.id.buttonCommand);
         dataButton = (Button) findViewById(R.id.buttonData);
+
+        textIp = (EditText) findViewById(R.id.textIp);
 
         textAirHum = (TextView) findViewById(R.id.textAirHum);
         textAirTemp = (TextView) findViewById(R.id.textAirTemp);
@@ -54,7 +59,7 @@ public class ActivityMain extends Activity {
                     public void onFail() {
                         commandText.setText("FALHA");
                     }
-                })).execute();
+                }, textIp.getText().toString())).execute();
             }
         });
 

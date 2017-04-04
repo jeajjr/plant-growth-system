@@ -11,8 +11,11 @@ import java.net.Socket;
 public class ConfigTransmitter extends AsyncTask<Void, Void, Boolean> {
 
     private ConfigTransmitterListener configTransmitter;
-    public ConfigTransmitter(ConfigTransmitterListener configTransmitter) {
+    private String IP;
+
+    public ConfigTransmitter(ConfigTransmitterListener configTransmitter, String IP) {
         this.configTransmitter = configTransmitter;
+        this.IP = IP;
     }
 
     public interface ConfigTransmitterListener {
@@ -25,7 +28,7 @@ public class ConfigTransmitter extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(Void... params) {
         byte[] message = {(byte)'1', (byte)'5', (byte)':', (byte)'0', (byte)'0',(byte)'\n'};
         try {
-            Socket socket = new Socket("192.168.0.3", 5001);
+            Socket socket = new Socket(IP, 5001);
             DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
 
             Log.d("ConfigTransmitter", "got connection");
@@ -44,6 +47,8 @@ public class ConfigTransmitter extends AsyncTask<Void, Void, Boolean> {
                 return true;
 
         } catch (IOException e) {
+            Log.e("ConfigTransmitter", "exception", e);
+        } catch (Exception e) {
             Log.e("ConfigTransmitter", "exception", e);
         }
 

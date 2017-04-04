@@ -65,6 +65,15 @@
             />
     </LinearLayout>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="8sp"
+        android:hint="192.168.0.3"
+        android:text="192.168.0.3"
+        android:id="@+id/textIp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
