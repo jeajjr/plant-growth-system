@@ -4,8 +4,45 @@ from time import sleep
 from sensor_reader import readAirHumidity, readAirTemperature, readSoilHumidity, readLightIntensity
 from actuator_controller import setLight, setWaterPump
 from data_uploader import postData
+import threading
+import socket
+import struct
 
 CONFIG_HAS_CHANGED = True
+
+
+class ConfigServer(threading.Thread):
+    def __init__(self,port):
+        self.__port = port
+        threading.Thread.__init__(self)
+
+    def run(self):
+        self.host = '0.0.0.0'
+        self.port = self.__port
+        print('starting  connection on', self.host, self.port)
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.bind((self.host, self.port))
+        self.sock.listen(1)
+        client, address = self.sock.accept()
+        print('got connection from ', address)
+
+        try:
+            _command = client.recv(4)
+            command = struct.unpack('!i', _command)[0]
+            _length = client.recv(4)
+            length = struct.unpack('!i', _length)[0]
+            data = client.recv(length)
+
+            print('received command', command, 'data', data)
+            # TODO: parse command and apply configurationFile
+            
+            client.send(b'\x00')
+        except Exception as e:
+            print(str(e))
+            client.send(b'\x01')
+            client.close()
+            return False
 
 def isNowInTimePeriod(startTime, endTime, nowTime):
     if startTime < endTime:
@@ -20,6 +57,8 @@ def main():
 
     setLight(ctrl_light)
     setWaterPump(ctrl_pump)
+
+    ConfigServer(5001).start()
 
     while True:
         global CONFIG_HAS_CHANGED
